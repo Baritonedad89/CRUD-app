@@ -23,6 +23,7 @@
   },
   "homepage": "https://github.com/Baritonedad89/CRUD-app#readme",
   "dependencies": {
+    "dotenv": "^6.2.0",
     "express": "^4.16.4",
     "mysql2": "^1.6.5",
     "pug": "^2.0.3",

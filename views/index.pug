@@ -1,0 +1,49 @@
+extends layout.pug
+
+block head
+    link(rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.0/css/bootstrap.min.css" integrity="sha384-PDle/QlgIONtM1aqA2Qemk5gPOE7wFq8+Em+G/hmo5Iq0CCmYZLv3fVRDJ4MMwEA" crossorigin="anonymous")
+
+    script(src="https://code.jquery.com/jquery-3.3.1.js"
+    integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
+    crossorigin="anonymous")
+
+
+block content 
+     .container
+        form
+            .form-row
+                .col
+                    input.form-control(type='text', placeholder='First name')
+                .col
+                    input.form-control(type='text', placeholder='Last name')
+            .form-row
+                .col
+                    .form-group
+                        label(for='exampleFormControlTextarea1') 
+                        textarea#exampleFormControlTextarea1.form-control(rows='3' placeholder='Blog text')
+            .form-row
+                .col
+                    button.btn.btn-dark(type='button') submit
+        .row
+            .col
+                .card.mt-5
+                    .card-header
+                        | Blog Entries
+                    .card-body
+                        h5.name
+                        p.text With supporting text below as a natural lead-in to additional content.
+                        .row.mt-5
+                            .col
+                                button.btn.btn-primary(type='button') Update
+                            .col
+                             button.btn.btn-danger(type='button') Delete
+
+              
+
+append scripts
+    script(src="https://code.jquery.com/jquery-3.3.1.js"
+  integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
+  crossorigin="anonymous")
+    script(src='https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo')
+    script(src='CRUD-app/public/js/index.js')
+
