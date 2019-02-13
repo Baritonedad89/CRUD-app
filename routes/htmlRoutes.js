@@ -1,9 +1,13 @@
 var db = require("../models");
 
 module.exports = function(app) {
-app.get('/', (req, res)=>{
-  res.render('index');
-})
+// app.get('/', (req, res)=> {
+//   db.Entry.findAll({}).then(function (allPosts) {
+//     res.json(allPosts);
+//     console.log(allPosts)
+    
+//   });
+// })
 
 
 

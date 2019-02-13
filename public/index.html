@@ -1,0 +1,67 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Cody's CRUD Blog</title>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.0/css/bootstrap.min.css"
+        integrity="sha384-PDle/QlgIONtM1aqA2Qemk5gPOE7wFq8+Em+G/hmo5Iq0CCmYZLv3fVRDJ4MMwEA" crossorigin="anonymous" />
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.16.0/moment.min.js"></script>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.js"
+        integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
+
+</head>
+
+<body>
+
+    <header class="jumbotron jumbotron-fluid">
+        <div class="container">
+            <h1 class="display-4">My CRUD Blog</h1>
+            <p class="lead">This CRUD app uses Express.js, Pug, Sequelize and Bootstrap</p>
+        </div>
+    </header>
+
+    <div class="container">
+        <form>
+            <div class="form-row">
+                <div class="col"><input class="form-control" id="first-name" type="text" placeholder="First name" />
+                </div>
+                <div class="col"><input class="form-control" id="last-name" type="text" placeholder="Last name" /></div>
+            </div>
+            <div class="form-row">
+                <div class="col">
+                    <div class="form-group"><label for="text-field"> </label><textarea class="form-control"
+                            id="text-field" rows="3" placeholder="Blog text"></textarea></div>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="col"><button class="btn btn-dark" id="submit-btn" type="button">submit</button></div>
+            </div>
+        </form>
+        <div id="blog-entries">
+
+        </div>
+
+
+
+
+
+        <!-- Footer-->
+        <footer class="page-footer font-small blue">
+            <!-- Copyright-->
+            <div class="footer-copyright text-center py-3">© 2019 Copyright:<a href="#"> Cody's CRUD Blog</a></div>
+            <!-- Copyright-->
+        </footer>
+        <!-- Footer-->
+    </div>
+
+
+
+
+<script src="js/index.js"></script>
+</body>
+
+</html>

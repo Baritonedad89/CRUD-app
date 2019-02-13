@@ -1,22 +1,22 @@
 require("dotenv").config();
 const express = require("express");
 const path = require('path');
-const pug = require("pug");
+// const pug = require("pug");
 
 
 const db = require("./models");
 
 const app = express();
 const PORT = process.env.PORT || 3000;
-
-// Middleware
-app.use(express.urlencoded({ extended: false }));
-app.use(express.json());
-// do I need this one???
+// Serve static content for the app from the "public" directory in the application directory.
 app.use(express.static("public"));
 
-app.set('views', path.join(__dirname, './views'));
-app.set("view engine", "pug");
+// Parse application body as JSON
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
+
+// app.set('views', path.join(__dirname, './views'));
+// app.set("view engine", "pug");
 
 // Routes
 require("./routes/apiRoutes")(app);

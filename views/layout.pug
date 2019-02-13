@@ -9,6 +9,98 @@ html(lang=en)
         block content 
         include includes/footer.pug
 
-block scripts
-    script(src='https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo')
-        script(src='./public/js/index.js')
+
+    block scripts
+        script(src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous")
+
+
+script(type="text/javascript").
+    const submitButton = $('#submit-btn');
+    const deleteButton = $('#delete.btn');
+    
+
+    $(submitButton).on('click', (event)=> {
+    event.preventDefault();
+
+
+    const newPost = {
+        firstName: $('#first-name').val().trim(),
+        lastName: $('#last-name').val().trim(),
+        text: $('#text-field').val().trim()
+        };
+
+    $.post('/api/posts', newPost)
+        .then((result)=>{
+            console.log(result);
+        })
+        $('#first-name').val("");
+        $('#last-name').val("");
+        $('#text-field').val("");
+
+
+
+        $.get('/api/posts', (data)=>{
+        console.log("data:", data);
+        for(let i = 0; i < data.length; i++) {
+            //- | const newEntry = "
+            //- div
+            //- | ";
+            //-     | newEntry.append("
+            //-     row
+            //-         | ");
+            //-         | .append("");
+            //-         | .append("
+            //-         .card.mt-5
+            //-         | ");
+            //-         | .append(`data-id-${data[i].id}`)
+            //-         | .append("
+            //-         .card-header
+            //-             | ");
+            //-             | .append("
+            //-             .card-body
+            //-             | ");
+            //-             | .append(`
+            //-             h5#name ${data[i].author}
+            //-             | `);
+            //-             |             .append(`
+            //-             p#text ${data[i].text}
+            //-             | `);
+            //-             |             .append("
+            //-             .row.mt-5
+            //-                 | ");
+            //-                 | .append("
+            //-                 div(class'col'='')
+            //-                 | ");
+            //-                 | .append(`
+            //-                 button#update.btn.btn-primary(type='button', data-id='${data[i].id}`') Update
+            //-                 | `)
+            //-                 |             .append("
+            //-                 div(class'col'='')
+            //-                     | ");
+            //-                     | .append(`
+            //-                     button#delete.btn.btn-danger(type='button', data-id='${data[i].id}`') delete
+            //-                     | `);
+            //-                     |             $('#blog-entries').append(newEntry);
+
+            const newEntry = "<div>"
+            newEntry.append("<row>")
+            .append("<col>")
+            .append("<div class='card mt-5'>")
+            .append(`data-id-${data[i].id}`)
+            .append("<div class='card-header'>")
+            .append("<div class='card-body'>")
+            .append("<h5 id='name'>")
+            .append("<p id='text'>")
+            .append("<div class='row mt-5'>")
+            .append("<div class'col'>")
+            .append("<button id='update' class='btn btn-primary' type='button'>Update</button>")
+            .append("<div class'col'>")
+            .append("<button id='delete' class='btn btn-danger' type='button'>delete</button>")
+            .append('</div>')
+            $('#blog-entries').append(newEntry);
+        }
+        });
+
+    });
+
+    

@@ -1,99 +1,128 @@
-// Get references to page elements
-var $exampleText = $("#example-text");
-var $exampleDescription = $("#example-description");
-var $submitBtn = $("#submit");
-var $exampleList = $("#example-list");
+$(document).ready(function () {
+  const submitButton = $('#submit-btn');
 
-// The API object contains methods for each kind of request we'll make
-var API = {
-  saveExample: function(example) {
-    return $.ajax({
-      headers: {
-        "Content-Type": "application/json"
-      },
-      type: "POST",
-      url: "api/examples",
-      data: JSON.stringify(example)
-    });
-  },
-  getExamples: function() {
-    return $.ajax({
-      url: "api/examples",
-      type: "GET"
-    });
-  },
-  deleteExample: function(id) {
-    return $.ajax({
-      url: "api/examples/" + id,
-      type: "DELETE"
-    });
-  }
-};
 
-// refreshExamples gets new examples from the db and repopulates the list
-var refreshExamples = function() {
-  API.getExamples().then(function(data) {
-    var $examples = data.map(function(example) {
-      var $a = $("<a>")
-        .text(example.text)
-        .attr("href", "/example/" + example.id);
+  // get all the post at the beginning of site load 
+  const getAllPosts = ()=>{
+  $.get('/api/posts/', (data) => {
+    // if (data.length !== 0) {
 
-      var $li = $("<li>")
-        .attr({
-          class: "list-group-item",
-          "data-id": example.id
-        })
-        .append($a);
+      console.log(data)
+      for (let i = 0; i < data.length; i++) {
+        const row = $("<div>");
+        row.append(`
+    <div class='card mt-5' id="blog-${data[i].id}" data-id=${data[i].id}>
+    <div class="card-header">Date created: ${moment(data[i].createdAt).format('h:mma on dddd')}</div>
+    <div class="card-body">
+    <h5 class="card-title">Author: ${data[i].author}</h5>
+    <p class="card-text" id="text-${data[i].id}">${data[i].text}</p>
+    <button id='update' class='btn btn-primary' data-id=${data[i].id} type='button'>Update</button>
+    <button id='delete' class='btn btn-danger' data-id=${data[i].id} type='button'>delete</button>
+  </div>
+</div>
+`)
+        $("#blog-entries").prepend(row);
 
-      var $button = $("<button>")
-        .addClass("btn btn-danger float-right delete")
-        .text("ｘ");
 
-      $li.append($button);
-
-      return $li;
-    });
-
-    $exampleList.empty();
-    $exampleList.append($examples);
+      }
+    // }
   });
 };
+getAllPosts();
 
-// handleFormSubmit is called whenever we submit a new example
-// Save the new example to the db and refresh the list
-var handleFormSubmit = function(event) {
-  event.preventDefault();
+  //  submit new post to database and display 
+  $(submitButton).on('click', (event) => {
+    event.preventDefault();
 
-  var example = {
-    text: $exampleText.val().trim(),
-    description: $exampleDescription.val().trim()
-  };
 
-  if (!(example.text && example.description)) {
-    alert("You must enter an example text and description!");
-    return;
-  }
+    const newPost = {
+      firstName: $('#first-name').val().trim(),
+      lastName: $('#last-name').val().trim(),
+      text: $('#text-field').val().trim(),
+      created_at: moment().format('h:mma on dddd')
+    };
 
-  API.saveExample(example).then(function() {
-    refreshExamples();
+    $.post('/api/posts/new', newPost)
+      .then(() => {
+
+        const row = $("<div>");
+        row.append(`
+    <div class='card mt-5' id="blog-${newPost.id}" data-id=${newPost.id}>
+    <div class="card-header">
+    Date created: ${newPost.created_at}
+    </div>
+    <div class="card-body">
+    <h5 class="card-title">Author: ${newPost.firstName} ${newPost.lastName}</h5>
+    <p class="card-text" id="text-${newPost.id}">${newPost.text}</p>
+    <button id='update' class='btn btn-primary' data-id=${newPost.id} type='button'>Update</button>
+    <button id='delete' class='btn btn-danger' data-id=${newPost.id} type='button'>delete</button>
+  </div>
+</div>
+`);
+        $("#blog-entries").prepend(row);
+
+
+      })
+    $('#first-name').val("");
+    $('#last-name').val("");
+    $('#text-field').val("");
   });
 
-  $exampleText.val("");
-  $exampleDescription.val("");
-};
+  // delete post 
 
-// handleDeleteBtnClick is called when an example's delete button is clicked
-// Remove the example from the db and refresh the list
-var handleDeleteBtnClick = function() {
-  var idToDelete = $(this)
-    .parent()
-    .attr("data-id");
+  // const deletePost = (id) => {
+  //   id = $(`#delete[data-id='${id}']`)
+  //   $.delete(`/api/posts/${id}`, function (data) {
 
-  API.deleteExample(idToDelete).then(function() {
-    refreshExamples();
+  //   })
+  // }
+
+  $(document).on('click', 'button#delete', function() {
+
+    let id = $(this).attr('data-id');
+    console.log('id', id)
+    console.log(id)
+
+    $.ajax({
+      method: "DELETE",
+      url: `/api/posts/${id}`
+    })
+      .then(function (data) {
+        const blogTodelete = $(`#blog-${id}`);
+        $(blogTodelete).remove();
+
+        console.log('data', data);
+      });
+
+
+
+
+
   });
-};
 
-// Add event listeners to the submit and delete buttons
-$submitBtn.on("click", handleFormSubmit);
-$exampleList.on("click", ".delete", handleDeleteBtnClick);
+  //  update post 
+  // $(document).on('click', 'button#update', function () {
+  //   let id = $(this).attr('data-id');
+  //   $(`#text-${id}`).attr()
+
+  // })
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+});
