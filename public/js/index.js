@@ -59,6 +59,8 @@ $(document).ready(function () {
 </div>
 `);
         $("#blog-entries").prepend(row);
+        getAllPosts();
+
 
 
       })
