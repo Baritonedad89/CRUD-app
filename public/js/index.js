@@ -5,7 +5,6 @@ $(document).ready(function () {
   // get all the post at the beginning of site load 
   const getAllPosts = ()=>{
   $.get('/api/posts/', (data) => {
-    // if (data.length !== 0) {
 
       console.log(data)
       for (let i = 0; i < data.length; i++) {
@@ -25,7 +24,7 @@ $(document).ready(function () {
 
 
       }
-    // }
+   
   });
 };
 getAllPosts();
@@ -68,20 +67,12 @@ getAllPosts();
     $('#text-field').val("");
   });
 
-  // delete post 
-
-  // const deletePost = (id) => {
-  //   id = $(`#delete[data-id='${id}']`)
-  //   $.delete(`/api/posts/${id}`, function (data) {
-
-  //   })
-  // }
-
+  
+// delete
   $(document).on('click', 'button#delete', function() {
 
     let id = $(this).attr('data-id');
     console.log('id', id)
-    console.log(id)
 
     $.ajax({
       method: "DELETE",
@@ -94,20 +85,31 @@ getAllPosts();
         console.log('data', data);
       });
 
-
-
-
-
   });
 
-  //  update post 
-  // $(document).on('click', 'button#update', function () {
-  //   let id = $(this).attr('data-id');
-  //   $(`#text-${id}`).attr()
+  
 
+// update
+$(document).on('click', 'button#update', function() {
+  let id = $(this).attr('data-id');
+
+  console.log('id', id);
+
+  $(`#text-${id}`).attr('contenteditable','true');
+  const thisUpdateButton = $(`#blog-${id}`);
+$(thisUpdateButton).append('<button style="background: yellow">post</button');
+const thisText = $(`#text-${id}`).val()
+console.log(thisText)
+
+
+  // $.ajax({
+  //   method: "UPDATE",
+  //   url: `/api/posts/${id}`,
+  //   data: 
   // })
 
 
+})
 
 
 

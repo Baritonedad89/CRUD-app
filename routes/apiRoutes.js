@@ -2,26 +2,12 @@ var db = require("../models");
 
 module.exports = function (app) {
 
-  
-  // app.get('/', (req, res) => {
-  //   db.Entry.findAll({}).then(function (allPosts) {
-  //     // res.json(allPosts);
-
-  //   });
-  // })
-
-  // Get all examples
-  // const getAllPosts = () => {
   app.get("/api/posts/", function (req, res) {
     db.Entry.findAll({}).then(function (dbEntries) {
       res.json(dbEntries);
 
     });
   });
-
-  
-// }
-// getAllPosts()
 
   // Create a new example
   app.post("/api/posts/new", function (req, res) {
@@ -48,15 +34,19 @@ module.exports = function (app) {
     });
   });
 
-  // // Delete an example by id
-  // app.delete("/api/posts/:id", function (req, res) {
-  //   db.Entry.destroy({ where: { id: req.params.id } }).then(function (deletedPost) {
-  //     res.json(deletedPost);
-  //     getAllPosts();
-
-  //   });
-  // });
-
-
+  // update
+  app.put("/api/posts/:id", function (req, res) {
+    const text = req.body.text;
+    const id = req.params.id
+    db.Entry.update({
+      text: text,
+      where: {
+        id: id
+      }
+    })
+      .then(function (result) {
+        res.json(result);
+      });
+  })
 
 };
