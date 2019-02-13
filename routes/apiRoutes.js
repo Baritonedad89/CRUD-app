@@ -38,12 +38,13 @@ module.exports = function (app) {
   app.put("/api/posts/:id", function (req, res) {
     const text = req.body.text;
     const id = req.params.id
-    db.Entry.update({
-      text: text,
-      where: {
-        id: id
-      }
-    })
+    db.Entry.update(req.body,
+      {
+        where: {
+          id: id
+        }
+
+      })
       .then(function (result) {
         res.json(result);
       });
