@@ -10,7 +10,7 @@ module.exports = function (app) {
   });
 
   // Create a new example
-  app.post("/api/posts/new", function (req, res) {
+  app.post("/api/posts", function (req, res) {
 
     const firstName = req.body.firstName;
     const lastName = req.body.lastName;
@@ -35,15 +35,14 @@ module.exports = function (app) {
   });
 
   // update
-  app.put("/api/posts/:id", function (req, res) {
-    const text = req.body.text;
-    const id = req.params.id
+  app.put("/api/posts", function (req, res) {
+    // const text = req.body.text;
+    // const id = req.params.id
     db.Entry.update(req.body,
       {
         where: {
-          id: id
+          id: req.body.id
         }
-
       })
       .then(function (result) {
         res.json(result);

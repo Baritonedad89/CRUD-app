@@ -41,7 +41,7 @@ $(document).ready(function () {
       created_at: moment().format('h:mma on dddd')
     };
 
-    $.post('/api/posts/new', newPost)
+    $.post('/api/posts', newPost)
       .then(() => {
 
         const row = $("<div>");
@@ -98,12 +98,13 @@ $(document).ready(function () {
 
     $(document).on('click', `button[data-id=${id}]`, function () {
       const updatedText = {
+        id: id,
         text: $(`#text-${id}`).text()
-      }
+      };
 
       $.ajax({
-        method: "UPDATE",
-        url: `/api/posts/${id}`,
+        method: "PUT",
+        url: `/api/posts`,
         data: updatedText
       }).then(function (data) {
         console.log('updated text', data)
@@ -114,77 +115,5 @@ $(document).ready(function () {
 
 
   })
-  // update
-  // $(document).on('click', 'button#update', function () {
-  //   const id = $(this).attr('data-id');
-  //   console.log('id', id);
-  //   const thisUpdateButton = $(`#blog-${id}`);
-  //   console.log(thisUpdateButton)
-  //   $(`#text-${id}`).attr('contenteditable', 'true');
-  //   const currentText = $(`#text-${id}`).text();
-
-
-
-
-
-
-
-
-
-
-
-
-  //     // $(this).text('post');
-
-  //     if ($(this).text() == 'update') {
-  //       // $(`#update[data-id='${id}']`).on('click', function(){
-  //       console.log('button clicked')
-  //       // $(this).text('post');
-
-  //       // $(`#text-${id}`).attr('contenteditable', 'true');
-
-  //     }
-
-
-
-
-
-  //   // if ($(this).text() == 'update') {
-  //   //   $(this).on('click', function () {
-  //   //     const updatedText = currentText;
-  //   //     if ($(this).text() == 'post') {
-  //   //       $(this).on('click', function () {
-  //   //         $(this).text('update');
-
-  //   //         $.ajax({
-  //   //           method: "UPDATE",
-  //   //           url: `/api/posts/${id}`,
-  //   //           data: updatedText
-  //   //         }).then(function (data) {
-  //   //           console.log('updated text',data)
-
-  //   //         });
-  //   //       });
-  //   //     };
-  //   //   });
-  //   // };
-
-  // })
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+  
 });
