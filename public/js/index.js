@@ -4,19 +4,19 @@ $(document).ready(function () {
 
   // get all the post at the beginning of site load 
   const getAllPosts = () => {
-    $.get('/api/posts/', (data) => {
+    $.get('/api/posts', (data) => {
 
       console.log(data)
       for (let i = 0; i < data.length; i++) {
         const row = $("<div>");
         row.append(`
-    <div class='card mt-5' id="blog-${data[i].id}" data-id=${data[i].id}>
+    <div class='card mt-5' id="blog-${data[i].id}" data-id="${data[i].id}">
     <div class="card-header">Date created: ${moment(data[i].createdAt).format('h:mma on dddd')}</div>
     <div class="card-body">
     <h5 class="card-title">Author: ${data[i].author}</h5>
-    <p class="card-text text-box" data-id=${data[i].id} id="text-${data[i].id}">${data[i].text}</p>
-    <button id='update' class='btn btn-primary' data-id=${data[i].id} type='button'>Update</button>
-    <button id='delete' class='btn btn-danger' data-id=${data[i].id} type='button'>delete</button>
+    <p class="card-text text-box" data-id="${data[i].id}" id="text-${data[i].id}">${data[i].text}</p>
+    <button id='update' class='btn btn-primary' data-id="${data[i].id}" type='button'>Update</button>
+    <button id='delete' class='btn btn-danger' data-id="${data[i].id}" type='button'>delete</button>
   </div>
 </div>
 `)
@@ -34,7 +34,7 @@ $(document).ready(function () {
     event.preventDefault();
 
 
-    const newPost = {
+    let newPost = {
       firstName: $('#first-name').val().trim(),
       lastName: $('#last-name').val().trim(),
       text: $('#text-field').val().trim(),
@@ -42,7 +42,8 @@ $(document).ready(function () {
     };
 
     $.post('/api/posts', newPost)
-      .then(() => {
+      .then((data) => {
+        newPost.id = data.id;
 
         const row = $("<div>");
         row.append(`
@@ -52,14 +53,14 @@ $(document).ready(function () {
     </div>
     <div class="card-body">
     <h5 class="card-title">Author: ${newPost.firstName} ${newPost.lastName}</h5>
-    <p class="card-text text-box" data-id=${newPost.id}id="text-${newPost.id}">${newPost.text}</p>
-    <button id='update' class='btn btn-primary' data-id=${newPost.id} type='button'>Update</button>
-    <button id='delete' class='btn btn-danger' data-id=${newPost.id} type='button'>delete</button>
+    <p class="card-text text-box" data-id="${newPost.id}" id="text-${newPost.id}">${newPost.text}</p>
+    <button id='update' class='btn btn-primary' data-id="${newPost.id}" type='button'>Update</button>
+    <button id='delete' class='btn btn-danger' data-id="${newPost.id}" type='button'>delete</button>
   </div>
 </div>
 `);
         $("#blog-entries").prepend(row);
-        getAllPosts();
+        // getAllPosts();
 
 
 
